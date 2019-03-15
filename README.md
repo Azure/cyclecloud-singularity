@@ -27,7 +27,7 @@ This sample requires the following:
   
      a. Download the source or binaries following the instructions here: (https://singularity.lbl.gov/install-linux)
      	* To download the source, you can simply run:
-	  ``curl -L -O https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-2.4.5.tar.gz``
+	  ``VERSION="2.4.5" curl -L -O https://github.com/singularityware/singularity/releases/download/${VERSION}/singularity-${VERSION}.tar.gz``
      b. Place the source tarball and/or package files in the `./blobs/` directory.
      c. If the version is not 2.4.5 (the project default), then update the version number in the Files list
         in `./project.ini` and in the cluster template: `./templates/pbs-singularity.txt`.
