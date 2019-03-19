@@ -27,9 +27,9 @@ This sample requires the following:
   
      a. Download the source or binaries following the instructions here: (https://singularity.lbl.gov/install-linux)
      	* To download the source, you can simply run:
-	  ``VERSION="2.4.5" curl -L -O https://github.com/singularityware/singularity/releases/download/${VERSION}/singularity-${VERSION}.tar.gz``
+	  ``VERSION="3.1.0" curl -L -O curl -L -O https://github.com/sylabs/singularity/releases/download/v$VERSION/singularity-$VERSION.tar.gz``
      b. Place the source tarball and/or package files in the `./blobs/` directory.
-     c. If the version is not 2.4.5 (the project default), then update the version number in the Files list
+     c. If the version is not 3.1.0 (the project default), then update the version number in the Files list
         in `./project.ini` and in the cluster template: `./templates/pbs-singularity.txt`.
      d. If you are starting from the package files, also add the package file names to the Files list in
         `./project.ini`
@@ -67,7 +67,7 @@ The first step is to configure the project for use with your storage locker:
 
   3. Copy the following source tarballs and/or RPM and DEB files to `./blobs`
     
-  4. If the version number is not 2.4.5, update the version numbers in `project.ini` and `templates/pbs-singularity.txt`
+  4. If the version number is not 3.1.0, update the version numbers in `project.ini` and `templates/pbs-singularity.txt`
 
   5. If adding the RPM and/or DEB files, add them to the Files list in the `project.ini`
     
