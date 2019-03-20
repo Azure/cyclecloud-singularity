@@ -21,6 +21,8 @@ directory node[:jetpack][:downloads] do
 end
 
 if myplatform == "centos"
+  package "libarchive-devel"
+  
   singularity_rpms=["singularity-runtime-#{VERSION}-1.el7.centos.x86_64.rpm", "singularity-#{VERSION}-1.el7.centos.x86_64.rpm"]
   singularity_rpm_path="#{node[:jetpack][:downloads]}/#{singularity_rpms[1]}"
   

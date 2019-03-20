@@ -7,7 +7,6 @@
 
 include_recipe 'build-essential'
 package "squashfs-tools"
-package "libarchive-devel"
 include_recipe 'singularity::_golang'
 
 VERSION = node['singularity']['version']
@@ -29,6 +28,8 @@ end
 
 
 if myplatform == "centos"
+  package "libarchive-devel"
+  
   singularity_rpms=["singularity-#{VERSION}-1.el7.centos.x86_64.rpm"]
   singularity_rpm_path="#{node['jetpack']['downloads']}/#{singularity_rpms[1]}"
   
@@ -59,17 +60,12 @@ if myplatform == "centos"
   end
   
 else
-  singularity_deb="singularity-container_#{VERSION}-1_amd64.deb"
-  singularity_deb_path="#{node['jetpack']['downloads']}/#{singularity_deb}"
-  
 
   %w"debhelper dh-autoreconf help2man build-essential libssl-dev uuid-dev libgpgme11-dev libseccomp-dev pkg-config".each do |pkg|
-    package pkg do
-      not_if { ::File.exists?(singularity_deb_path) }
-    end
+    package pkg
   end
   
-  bash 'make and install singularity from source' do
+  bash 'prepare singularity source build' do
     cwd "/tmp"
     code <<-EOH
          set -e
@@ -77,12 +73,25 @@ else
          export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin
          mkdir -p $GOPATH/src/github.com/sylabs
          cd $GOPATH/src/github.com/sylabs
-         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz
          tar -xzf #{node['jetpack']['downloads']}/singularity-#{VERSION}.tar.gz
          cd ./singularity
          ./mconfig
          EOH
-    not_if { ::File.exists?( singularity_deb_path ) }
+    # not_if { ::File.exists?( singularity_deb_path ) }
+  end
+  
+  bash 'prepare singularity source build' do
+    cwd "/tmp"
+    code <<-EOH
+         set -e
+         export GOPATH=${HOME}/go
+         export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin
+         cd $GOPATH/src/github.com/sylabs/singularity/builddir
+
+         export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+         make
+         make install
+         EOH
   end
   
 end
