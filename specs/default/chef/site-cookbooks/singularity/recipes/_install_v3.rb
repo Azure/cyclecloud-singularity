@@ -30,7 +30,7 @@ end
 if myplatform == "centos"
   package "libarchive-devel"
   
-  singularity_rpms=["singularity-#{VERSION}-1.el7.centos.x86_64.rpm"]
+  singularity_rpms=["singularity-#{VERSION}-1.el7.x86_64.rpm"]
   singularity_rpm_path="#{node['jetpack']['downloads']}/#{singularity_rpms[1]}"
   
   %w"automake rpm-build golang openssl-devel libuuid-devel libseccomp-devel".each do |pkg|
